@@ -1,0 +1,48 @@
+trigger: none
+
+# 使用するリソースの指定。この場合、このYAMLが存在するリポジトリ自体を指定しています。
+resources:
+- repo: self
+
+# 共通で使用する変数の定義。
+variables:
+  imageName: 'reticulum-image'
+  registryName: 'myACR.azurecr.io'  # 使用するAzure Container Registryの名前。
+  kubernetesServiceConnection: 'MyAKSCluster'  # Azure DevOpsで設定したAKSへのサービス接続名。
+  namespace: 'default'
+
+# ステージの定義。ビルドとデプロイの2つのステージからなります。
+stages:
+- stage: Build  # ビルドステージの開始。
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'  # 実行するエージェントのイメージを指定。この場合、Ubuntuの最新版。
+    steps:
+    - task: Docker@2  # Dockerタスクを使用してイメージのビルドとプッシュを行います。
+      inputs:
+        command: 'buildAndPush'
+        repository: '$(imageName)'
+        dockerfile: '**/Dockerfile'  # DockerイメージをビルドするためのDockerfileのパス。
+        containerRegistry: '$(registryName)'  # プッシュ先のContainer Registry。
+        tags: |
+          $(Build.BuildId)  # イメージにタグとしてビルドIDを付与。
+
+- stage: Deploy  # デプロイステージの開始。
+  jobs:
+  - deployment: Deploy
+    environment: 'production'
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0  # Kubernetesタスクを使用してマニフェストを基にデプロイを行います。
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: '$(kubernetesServiceConnection)'
+              namespace: '$(namespace)'
+              manifests: '**/k8s-manifest.yaml'  # AKSへデプロイするためのKubernetesマニフェストファイルのパス。
+              containers: |
+                $(registryName)/$(imageName):$(Build.BuildId)  # 使用するDockerイメージの指定。
