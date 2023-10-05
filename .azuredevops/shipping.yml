@@ -7,8 +7,8 @@ resources:
 # 共通で使用する変数の定義。
 variables:
   imageName: 'reticulum-image'
-  registryName: 'myACR.azurecr.io'  # 使用するAzure Container Registryの名前。
-  kubernetesServiceConnection: 'MyAKSCluster'  # Azure DevOpsで設定したAKSへのサービス接続名。
+  registryName: 'dvhubstestacrje.azurecr.io'  # 使用するAzure Container Registryの名前。
+  kubernetesServiceConnection: 'dvhubstestaksje'  # Azure DevOpsで設定したAKSへのサービス接続名。
   namespace: 'default'
 
 # ステージの定義。ビルドとデプロイの2つのステージからなります。

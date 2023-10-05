@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: reticulum
-        image: myACR.azurecr.io/reticulum-image:latest  # Dockerイメージのパス（Azure DevOpsのパイプラインから上書きされます）。
+        image: dvhubstestacrje.azurecr.io/reticulum-image:latest  # Dockerイメージのパス（Azure DevOpsのパイプラインから上書きされます）。
         ports:
         - containerPort: 80  # Reticulumが使用するポートを指定。
 
