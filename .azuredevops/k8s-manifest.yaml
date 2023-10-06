@@ -18,8 +18,9 @@ spec:
         image: dvhubstestacrje.azurecr.io/reticulum-image:latest  # Dockerイメージのパス（Azure DevOpsのパイプラインから上書きされます）。
         ports:
         - containerPort: 80  # Reticulumが使用するポートを指定。
-
+---
 # Reticulumへの外部からのアクセスを可能にするサービスの定義。
+apiVersion: v1
 kind: Service
 metadata:
   name: reticulum-service
