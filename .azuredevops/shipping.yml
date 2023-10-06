@@ -48,4 +48,4 @@ stages:
               namespace: '$(namespace)'
               manifests: '.azuredevops/k8s-manifest.yaml'  # AKSへデプロイするためのKubernetesマニフェストファイルのパス。
               containers: |
-                $(registryName)/$(imageName):$(Build.BuildId)  # 使用するDockerイメージの指定。
+                $(registryName)/$(imageName):$(Build.BuildId)
