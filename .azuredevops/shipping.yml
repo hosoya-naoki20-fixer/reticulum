@@ -23,7 +23,7 @@ stages:
       inputs:
         command: 'buildAndPush'
         repository: '$(imageName)'
-        dockerfile: '**/Dockerfile'  # DockerイメージをビルドするためのDockerfileのパス。
+        dockerfile: 'TurkeyDockerfile'  # DockerイメージをビルドするためのDockerfileのパス。
         containerRegistry: '$(registryName)'  # プッシュ先のContainer Registry。
         tags: |
           $(Build.BuildId)  # イメージにタグとしてビルドIDを付与。
