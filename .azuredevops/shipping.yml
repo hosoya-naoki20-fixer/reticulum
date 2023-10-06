@@ -26,7 +26,7 @@ stages:
         dockerfile: 'TurkeyDockerfile'  # DockerイメージをビルドするためのDockerfileのパス。
         containerRegistry: '$(registryName)'  # プッシュ先のContainer Registry。
         tags: |
-          $(Build.BuildId)  # イメージにタグとしてビルドIDを付与。
+          $(Build.BuildId)
 
 - stage: Deploy  # デプロイステージの開始。
   jobs:
