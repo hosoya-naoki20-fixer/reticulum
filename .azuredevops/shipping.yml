@@ -38,6 +38,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self
           - script: ls -la $(System.DefaultWorkingDirectory)
             displayName: 'List directory contents'
           - task: KubernetesManifest@0  # Kubernetesタスクを使用してマニフェストを基にデプロイを行います。
